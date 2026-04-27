@@ -17,7 +17,7 @@ services:
       - ./config:/root/.canopy/config:ro
     environment:
       - CANOPY_ENV=${CANOPY_ENV:-mainnet}
-      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_LEVEL=${LOG_LEVEL:-debug}
     networks:
       - canopy-net
     healthcheck:
