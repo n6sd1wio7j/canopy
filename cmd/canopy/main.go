@@ -59,7 +59,8 @@ var versionCmd = &cobra.Command{
 func init() {
 	// Register persistent flags available to all subcommands
 	rootCmd.PersistentFlags().String("home", defaultHome(), "home directory for config and data")
-	rootCmd.PersistentFlags().String("log-level", "info", "log level (debug, info, warn, error)")
+	// Default to debug level for easier local development and troubleshooting
+	rootCmd.PersistentFlags().String("log-level", "debug", "log level (debug, info, warn, error)")
 
 	// Register subcommands
 	rootCmd.AddCommand(startCmd)
@@ -105,25 +106,4 @@ func runStart(cmd *cobra.Command, args []string) error {
 
 // runInit initializes a new Canopy node with default configuration.
 func runInit(cmd *cobra.Command, args []string) error {
-	homeDir, err := cmd.Flags().GetString("home")
-	if err != nil {
-		return fmt.Errorf("failed to read home flag: %w", err)
-	}
-
-	fmt.Printf("Initializing Canopy node at %s\n", homeDir)
-	if err := app.InitializeNode(homeDir); err != nil {
-		return fmt.Errorf("initialization failed: %w", err)
-	}
-
-	fmt.Printf("Node initialized successfully. Run '%s start' to begin.\n", AppName)
-	return nil
-}
-
-// defaultHome returns the default home directory path.
-func defaultHome() string {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return DefaultHomeDir
-	}
-	return fmt.Sprintf("%s/%s", home, DefaultHomeDir)
-}
+	homeDir, err := cmd.Flags().GetSt
