@@ -59,8 +59,9 @@ var versionCmd = &cobra.Command{
 func init() {
 	// Register persistent flags available to all subcommands
 	rootCmd.PersistentFlags().String("home", defaultHome(), "home directory for config and data")
-	// Default to debug level for easier local development and troubleshooting
-	rootCmd.PersistentFlags().String("log-level", "debug", "log level (debug, info, warn, error)")
+	// Changed default log level from "debug" to "info" to reduce noise during normal operation.
+	// Use --log-level=debug explicitly when troubleshooting.
+	rootCmd.PersistentFlags().String("log-level", "info", "log level (debug, info, warn, error)")
 
 	// Register subcommands
 	rootCmd.AddCommand(startCmd)
@@ -105,5 +106,4 @@ func runStart(cmd *cobra.Command, args []string) error {
 }
 
 // runInit initializes a new Canopy node with default configuration.
-func runInit(cmd *cobra.Command, args []string) error {
-	homeDir, err := cmd.Flags().GetSt
+func runInit(
